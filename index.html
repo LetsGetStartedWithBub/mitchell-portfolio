@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mitchell Anthony — Backend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1220;
+    --panel:#121B2E;
+    --panel-2:#16213A;
+    --line:#253352;
+    --paper:#E8ECF3;
+    --muted:#8A97AD;
+    --amber:#F2A94E;
+    --teal:#4FD1C5;
+    --rose:#E8646B;
+    --radius:10px;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+    --display:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(242,169,78,0.06), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(79,209,197,0.06), transparent 40%);
+  }
+
+  a{color:inherit;}
+
+  ::selection{background:var(--amber);color:var(--ink);}
+
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:56px;
+  }
+  .nav-brand{
+    font-family:var(--mono);font-size:13px;color:var(--muted);
+    display:flex;align-items:center;gap:8px;
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px rgba(79,209,197,0.15);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.35;}
+  }
+  .nav-links{display:flex;gap:24px;font-family:var(--mono);font-size:12.5px;}
+  .nav-links a{color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--amber);}
+  .nav-links{display:none;}
+  @media(min-width:720px){.nav-links{display:flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:88px 0 64px;border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;color:var(--teal);
+    letter-spacing:0.06em;margin-bottom:18px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow .dot{background:var(--amber);box-shadow:0 0 0 3px rgba(242,169,78,0.15);}
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(36px,6vw,64px);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+  }
+  h1 span{color:var(--amber);}
+  .role-line{
+    font-family:var(--display);font-weight:500;
+    font-size:clamp(16px,2.4vw,22px);
+    color:var(--muted);margin-top:14px;max-width:640px;
+  }
+  .bio{
+    margin-top:22px;max-width:560px;color:var(--paper);opacity:0.85;
+    font-size:15.5px;
+  }
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;}
+  .tag{
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    border:1px solid var(--line);padding:5px 10px;border-radius:20px;
+  }
+
+  .uptime-box{
+    margin-top:40px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 22px;
+    display:inline-flex;
+    flex-direction:column;
+    gap:6px;
+    max-width:100%;
+  }
+  .uptime-label{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .uptime-value{
+    font-family:var(--mono);font-size:clamp(18px,3vw,24px);color:var(--teal);
+    font-weight:600;letter-spacing:0.01em;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  section{padding:64px 0;border-bottom:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:34px;flex-wrap:wrap;}
+  .sec-num{font-family:var(--mono);color:var(--muted);font-size:13px;}
+  .sec-title{font-family:var(--display);font-weight:600;font-size:clamp(22px,3vw,30px);}
+  .sec-sub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:auto;}
+
+  /* ---------- SERVICES (EXPERIENCE) ---------- */
+  .services{display:grid;gap:16px;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease, border-color .25s ease;
+  }
+  .card.in-view{opacity:1;transform:translateY(0);}
+  .card:hover{border-color:rgba(79,209,197,0.4);}
+  .card-top{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:10px;margin-bottom:6px;
+  }
+  .card-name{font-family:var(--display);font-weight:600;font-size:19px;}
+  .badge{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;
+    padding:3px 9px;border-radius:20px;text-transform:uppercase;
+  }
+  .badge.active{color:var(--teal);border:1px solid rgba(79,209,197,0.4);background:rgba(79,209,197,0.08);}
+  .badge.archived{color:var(--muted);border:1px solid var(--line);}
+  .card-meta{
+    font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:14px;
+  }
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .chip{
+    font-family:var(--mono);font-size:11.5px;color:var(--amber);
+    background:rgba(242,169,78,0.08);border:1px solid rgba(242,169,78,0.25);
+    padding:4px 10px;border-radius:6px;
+  }
+  details{margin-top:14px;}
+  summary{
+    cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--muted);
+    list-style:none;display:flex;align-items:center;gap:6px;
+    user-select:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:'▸';display:inline-block;transition:transform .2s;color:var(--teal);}
+  details[open] summary::before{transform:rotate(90deg);}
+  summary:hover{color:var(--paper);}
+  .log-list{margin-top:12px;padding-left:0;list-style:none;display:grid;gap:9px;}
+  .log-list li{
+    font-size:14px;color:var(--paper);opacity:0.85;padding-left:18px;position:relative;
+  }
+  .log-list li::before{
+    content:'//';position:absolute;left:0;color:var(--line);
+    font-family:var(--mono);font-size:12px;
+  }
+
+  /* ---------- STACK MANIFEST ---------- */
+  .manifest{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 28px;font-family:var(--mono);font-size:13.5px;
+    opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;
+  }
+  .manifest.in-view{opacity:1;transform:translateY(0);}
+  .m-row{display:flex;gap:16px;padding:10px 0;border-bottom:1px dashed var(--line);flex-wrap:wrap;}
+  .m-row:last-child{border-bottom:none;}
+  .m-key{color:var(--teal);min-width:130px;flex-shrink:0;}
+  .m-val{color:var(--muted);}
+  .m-val b{color:var(--paper);font-weight:500;}
+
+  /* ---------- LEDGER ---------- */
+  .ledger{display:grid;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .ledger-row{
+    display:grid;grid-template-columns:100px 1fr;gap:16px;
+    padding:16px 20px;border-bottom:1px solid var(--line);
+    background:var(--panel);
+  }
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row:nth-child(even){background:var(--panel-2);}
+  .l-tag{font-family:var(--mono);font-size:11px;color:var(--amber);align-self:start;padding-top:2px;}
+  .l-text{font-size:14.5px;color:var(--paper);opacity:0.9;}
+  .l-text b{color:var(--teal);font-weight:600;}
+
+  .edu-line{
+    margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--muted);
+  }
+  .edu-line b{color:var(--paper);}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:70px 0 90px;}
+  .terminal{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 30px;font-family:var(--mono);font-size:14px;
+  }
+  .term-line{margin-bottom:14px;color:var(--muted);}
+  .term-prompt{color:var(--teal);}
+  .term-cmd{color:var(--paper);}
+  .flags{display:grid;gap:10px;margin-top:6px;}
+  .flag-row{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;}
+  .flag{color:var(--amber);}
+  .flag-val{color:var(--paper);text-decoration:none;border-bottom:1px dotted var(--line);}
+  .flag-val:hover{border-color:var(--teal);color:var(--teal);}
+  .foot-note{margin-top:40px;font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;}
+
+  @media (max-width:600px){
+    .ledger-row{grid-template-columns:1fr;gap:6px;}
+    .sec-sub{margin-left:0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="nav-brand" href="https://github.com/LetsGetStartedWithBub" target="_blank" rel="noopener" style="text-decoration:none;"><span class="dot"></span> ~/mitchell-anthony</a>
+    <div class="nav-links">
+      <a href="#services">services</a>
+      <a href="#stack">stack</a>
+      <a href="#ledger">ledger</a>
+      <a href="#contact">connect</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> STATUS: OPERATIONAL</div>
+    <h1>Mitchell Anthony<span>.</span></h1>
+    <p class="role-line">Backend Engineer — distributed systems, integration platforms &amp; AI-driven products.</p>
+    <p class="bio">4+ years shipping backend infrastructure across B2B commerce, healthcare and fintech — from configuration-first integration frameworks to autoscaling pipelines and AI-powered storefronts. I care about systems that stay boring in production.</p>
+    <div class="tag-row">
+      <span class="tag">Bangalore, IN</span>
+      <span class="tag">Golang</span>
+      <span class="tag">Python</span>
+      <span class="tag">AWS</span>
+      <span class="tag">System Design</span>
+      <span class="tag">Microservices</span>
+    </div>
+    <div class="uptime-box">
+      <span class="uptime-label">Career uptime</span>
+      <span class="uptime-value" id="uptime">calculating…</span>
+    </div>
+  </div>
+</header>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">services / experience</span>
+      <span class="sec-sub">5 deployed · 1 active</span>
+    </div>
+
+    <div class="services">
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Wizcommerce</span>
+          <span class="badge active">active</span>
+        </div>
+        <div class="card-meta">SDE II · Backend · Jun 2025 — Present</div>
+        <div class="chip-row">
+          <span class="chip">onboarding: weeks → days</span>
+          <span class="chip">idle compute ↓</span>
+          <span class="chip">AI storefront gen</span>
+        </div>
+        <details>
+          <summary>view logs</summary>
+          <ul class="log-list">
+            <li>Architected a configuration-first iPaaS integration framework with Business Central and NetSuite, cutting new-integration onboarding from weeks to days.</li>
+            <li>Designed a task-queue-driven pod autoscaling mechanism, adjusting capacity dynamically off queue depth and cutting idle compute overhead.</li>
+            <li>Built Golang REST APIs powering external commerce workflows — auth, product catalog, order management.</li>
+            <li>Developed an AI-driven React storefront generator: one prompt, a fully functional store.</li>
+            <li>Drove backend optimization across service layers, improving query performance and system throughput.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Zelthy</span>
+          <span class="badge archived">archived</span>
+        </div>
+        <div class="card-meta">SDE · Backend · Jul 2022 — Apr 2025</div>
+        <div class="chip-row">
+          <span class="chip">0 escalations</span>
+          <span class="chip">100% on-time</span>
+          <span class="chip">3 yr tenure</span>
+        </div>
+        <details>
+          <summary>view logs</summary>
+          <ul class="log-list">
+            <li>Built and shipped CRM solutions for healthcare platforms — secure patient data migration and automated scheduling via Celery and Django.</li>
+            <li>Engineered a unified email integration layer in the Zelthy Core Framework, consolidating comms across client deployments into one configurable interface.</li>
+            <li>Owned end-to-end delivery and client support across all engagements — zero escalations, 100% on-time delivery for 3 years.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Torque Vision Labs</span>
+          <span class="badge archived">archived</span>
+        </div>
+        <div class="card-meta">Full Stack Developer · Aug 2021 — Jul 2022</div>
+        <div class="chip-row">
+          <span class="chip">+30% retention</span>
+          <span class="chip">CV fraud detection</span>
+          <span class="chip">Spark + Neo4j</span>
+        </div>
+        <details>
+          <summary>view logs</summary>
+          <ul class="log-list">
+            <li>Built a computer-vision-powered fraud detection system paired with a social analytics engine for real-time suspicious-activity detection.</li>
+            <li>Designed a distributed data pipeline (Spark, Neo4j) to process large-scale user activity and visualize behavioral graphs.</li>
+            <li>Increased post-sale retention by 30% by integrating a structured customer feedback workflow between sales and support.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Juspay</span>
+          <span class="badge archived">archived</span>
+        </div>
+        <div class="card-meta">Technical Product Analyst · Jul 2021 — Jan 2022</div>
+        <div class="chip-row">
+          <span class="chip">real-time infra visibility</span>
+          <span class="chip">Docker / K8s hardening</span>
+        </div>
+        <details>
+          <summary>view logs</summary>
+          <ul class="log-list">
+            <li>Built an internal traffic monitoring platform on AWS (Node.js, Python) for real-time visibility into service health and request flow.</li>
+            <li>Hardened production infra through Docker containerization, Kubernetes orchestration and reverse proxy tuning.</li>
+            <li>Produced structured LMS course content pairing narrative curriculum with visual graphics for technical training.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-name">Hackveda</span>
+          <span class="badge archived">archived</span>
+        </div>
+        <div class="card-meta">Full Stack Developer · Oct 2020 — Feb 2021</div>
+        <div class="chip-row">
+          <span class="chip">led 4-eng team</span>
+          <span class="chip">OCR + deep learning</span>
+        </div>
+        <details>
+          <summary>view logs</summary>
+          <ul class="log-list">
+            <li>Led a 4-engineer backend team building a healthcare app using OCR and deep learning to automate patient report ingestion.</li>
+            <li>Architected and deployed a scalable AWS backend for patient data workflows, built for high availability and compliance.</li>
+            <li>Unified frontend-backend communication through an API Gateway layer, standardizing service contracts.</li>
+          </ul>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">stack.manifest</span>
+    </div>
+    <div class="manifest">
+      <div class="m-row"><span class="m-key">languages</span><span class="m-val"><b>Python</b>, <b>Golang</b>, C#, JavaScript (React)</span></div>
+      <div class="m-row"><span class="m-key">frameworks</span><span class="m-val">Django, FastAPI</span></div>
+      <div class="m-row"><span class="m-key">databases</span><span class="m-val">PostgreSQL, MongoDB, Neo4j, Elasticsearch</span></div>
+      <div class="m-row"><span class="m-key">cloud & infra</span><span class="m-val"><b>AWS</b> (Certified), Google Cloud, Docker, Kubernetes</span></div>
+      <div class="m-row"><span class="m-key">messaging</span><span class="m-val">Celery, Dramatiq, Spark</span></div>
+      <div class="m-row"><span class="m-key">practices</span><span class="m-val">Microservices, REST APIs, System Design, Team Leadership</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="ledger">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">ledger / achievements</span>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <span class="l-tag">DSA</span>
+        <span class="l-text"><b>500+</b> Data Structures &amp; Algorithms problems solved on LeetCode.</span>
+      </div>
+      <div class="ledger-row">
+        <span class="l-tag">CERT</span>
+        <span class="l-text"><b>AWS Certified Cloud Practitioner</b> (2021 – 2027).</span>
+      </div>
+      <div class="ledger-row">
+        <span class="l-tag">EVENT</span>
+        <span class="l-text">Winner, <b>Duothon Hackathon</b> — Chaitanya Bharathi Institute of Technology.</span>
+      </div>
+      <div class="ledger-row">
+        <span class="l-tag">EVENT</span>
+        <span class="l-text">Cleared the <b>SOLVED Challenge 2021</b>, in collaboration with UNV, UNDP and MoYAS.</span>
+      </div>
+      <div class="ledger-row">
+        <span class="l-tag">OSS</span>
+        <span class="l-text">Contributed to <b>CNCF kubectl</b> (2025) — installation error docs, sysctl error URL fix and check_pre_req URL-handling refactor.</span>
+      </div>
+    </div>
+
+    <p class="edu-line">
+      <b>Certifications:</b> AWS Certified Cloud Practitioner · Google Project Management · Data Analysis using Python · CCNA / DevNet Associate · Programming Essentials in C, C++ &amp; Python · Networking Essentials &amp; Intro to Cybersecurity
+    </p>
+    <p class="edu-line">
+      <b>Education:</b> B.Tech, Computer Science — Gyan Ganga College of Technology, Jabalpur (GPA 9.14/10), 2017–2021
+    </p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">connect</span>
+    </div>
+    <div class="terminal">
+      <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">connect --with mitchell</span></div>
+      <div class="flags">
+        <div class="flag-row"><span class="flag">--email</span><a class="flag-val" href="mailto:contacting.mitchell@gmail.com">contacting.mitchell@gmail.com</a></div>
+        <div class="flag-row"><span class="flag">--phone</span><a class="flag-val" href="tel:+917489470146">+91 7489470146</a></div>
+        <div class="flag-row"><span class="flag">--github</span><a class="flag-val" href="https://github.com/LetsGetStartedWithBub" target="_blank" rel="noopener">github.com/LetsGetStartedWithBub</a></div>
+        <div class="flag-row"><span class="flag">--location</span><span class="flag-val" style="border-bottom:none;">Bangalore, Karnataka, IN</span></div>
+      </div>
+    </div>
+    <p class="foot-note">designed &amp; built with a system status board in mind — because that's how backend engineers see the world.</p>
+  </div>
+</footer>
+
+<script>
+  // Career uptime counter — ticking from graduation (Jun 2021)
+  const start = new Date('2021-06-01T00:00:00');
+  const el = document.getElementById('uptime');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function updateUptime(){
+    const now = new Date();
+    let diffMs = now - start;
+
+    const msPerYear = 1000*60*60*24*365.25;
+    const years = Math.floor(diffMs / msPerYear);
+    diffMs -= years * msPerYear;
+    const msPerMonth = 1000*60*60*24*30.44;
+    const months = Math.floor(diffMs / msPerMonth);
+    diffMs -= months * msPerMonth;
+    const days = Math.floor(diffMs / (1000*60*60*24));
+    diffMs -= days * (1000*60*60*24);
+    const hours = Math.floor(diffMs / (1000*60*60));
+    diffMs -= hours * (1000*60*60);
+    const mins = Math.floor(diffMs / (1000*60));
+    diffMs -= mins * (1000*60);
+    const secs = Math.floor(diffMs / 1000);
+
+    el.textContent = `${years}y ${months}m ${days}d  ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  }
+  updateUptime();
+  setInterval(updateUptime, 1000);
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.card, .manifest');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
